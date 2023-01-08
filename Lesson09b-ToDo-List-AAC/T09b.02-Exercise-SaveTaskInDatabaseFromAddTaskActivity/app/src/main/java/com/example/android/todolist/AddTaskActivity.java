@@ -24,7 +24,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.example.android.todolist.database.AppDatabase;
+import com.example.android.todolist.database.TaskDao;
 import com.example.android.todolist.database.TaskEntry;
+
+import java.util.Date;
 
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -47,16 +51,17 @@ public class AddTaskActivity extends AppCompatActivity {
     Button mButton;
 
     private int mTaskId = DEFAULT_TASK_ID;
+    private AppDatabase mDB;
 
-    // TODO (3) Create AppDatabase member variable for the Database
+    //  (3) Create AppDatabase member variable for the Database
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
         initViews();
-
-        // TODO (4) Initialize member variable for the data base
+        mDB = AppDatabase.getInstance(this.getApplicationContext());
+        //  (4) Initialize member variable for the data base
 
         if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)) {
             mTaskId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
@@ -107,13 +112,18 @@ public class AddTaskActivity extends AppCompatActivity {
      * It retrieves user input and inserts that new task data into the underlying database.
      */
     public void onSaveButtonClicked() {
-        // TODO (5) Create a description variable and assign to it the value in the edit text
-        // TODO (6) Create a priority variable and assign the value returned by getPriorityFromViews()
-        // TODO (7) Create a date variable and assign to it the current Date
-
-        // TODO (8) Create taskEntry variable using the variables defined above
-        // TODO (9) Use the taskDao in the AppDatabase variable to insert the taskEntry
-        // TODO (10) call finish() to come back to MainActivity
+        String description =  mEditText.getText().toString();
+        int priority = getPriorityFromViews();
+        Date date = new Date();
+        TaskEntry taskEntry = new TaskEntry(description,priority,date);
+        mDB.taskDao().insertTask(taskEntry);
+        //  (5) Create a description variable and assign to it the value in the edit text
+        //  (6) Create a priority variable and assign the value returned by getPriorityFromViews()
+        //  (7) Create a date variable and assign to it the current Date
+        finish();
+        //  (8) Create taskEntry variable using the variables defined above
+        //  (9) Use the taskDao in the AppDatabase variable to insert the taskEntry
+        //  (10) call finish() to come back to MainActivity
     }
 
     /**
