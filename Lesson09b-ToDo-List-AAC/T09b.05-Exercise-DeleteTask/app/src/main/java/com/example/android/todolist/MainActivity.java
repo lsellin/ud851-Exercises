@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
                     }
                 });
                 //  (3) get the position from the viewHolder parameter
-                // TODO (4) Call deleteTask in the taskDao with the task at that position
-                // TODO (6) Call retrieveTasks method to refresh the UI
+                //  (4) Call deleteTask in the taskDao with the task at that position
+                //  (6) Call retrieveTasks method to refresh the UI
                 retrieveTasks();
             }
         }).attachToRecyclerView(mRecyclerView);
